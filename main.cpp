@@ -1,41 +1,69 @@
-
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <mef.hpp>
+#include <iostream>
 
-int main()
-{
-    Console::print("Message");
+// Diese Funktion wird aufgerufen, wenn die Fenstergröße geändert wird
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+    glViewport(0, 0, width, height);
+}
 
-    GLFWwindow* window;
-
-    /* Initialize the library */
-    if (!glfwInit())
+int main() {
+    Console::print("Starting application");
+    
+    // GLFW initialisieren
+    if (!glfwInit()) {
+        std::cerr << "Failed to initialize GLFW" << std::endl;
         return -1;
-
-    /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-    if (!window)
-    {
+    }
+    
+    // OpenGL-Version und -Profil konfigurieren
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6); // oder eine niedrigere Version, falls nötig
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    
+    // Fenster erstellen
+    GLFWwindow* window = glfwCreateWindow(800, 600, "Hello OpenGL", NULL, NULL);
+    if (!window) {
+        std::cerr << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return -1;
     }
-
-    /* Make the window's context current */
+    
+    // OpenGL-Kontext aktivieren
     glfwMakeContextCurrent(window);
-
-    /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(window))
-    {
-        /* Render here */
+    
+    // Callback für Fenstergrößenänderungen registrieren
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    
+    // Glad laden: OpenGL-Funktionen laden
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        std::cerr << "Failed to initialize GLAD" << std::endl;
+        return -1;
+    }
+    
+    // OpenGL-Viewport setzen
+    glViewport(0, 0, 800, 600);
+    
+    // Hintergrundfarbe setzen (dunkelblau)
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    
+    // Render-Loop
+    while (!glfwWindowShouldClose(window)) {
+        // Eingabe verarbeiten
+        if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+            glfwSetWindowShouldClose(window, true);
+        
+        // Rendering
         glClear(GL_COLOR_BUFFER_BIT);
-
-        /* Swap front and back buffers */
+        
+        // Buffers austauschen und Events prüfen
         glfwSwapBuffers(window);
-
-        /* Poll for and process events */
         glfwPollEvents();
     }
-
+    
+    // Aufräumen
     glfwTerminate();
     return 0;
 }
+

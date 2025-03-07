@@ -35,8 +35,28 @@ option(GLFW_BUILD_TESTS OFF)
 option(GLFW_INSTALL OFF)
 FetchContent_MakeAvailable(glfw)
 
+#GLAD
+FetchContent_Declare(
+    glad
+    GIT_REPOSITORY https://github.com/Dav1dde/glad.git
+    GIT_TAG v0.1.36
+)
+FetchContent_GetProperties(glad)
+if(NOT glad_POPULATED)
+    FetchContent_Populate(glad)
+    
+    # Glad Konfigurationen
+    set(GLAD_PROFILE "core" CACHE STRING "OpenGL profile")
+    set(GLAD_API "gl=4.6" CACHE STRING "API type/version pairs, like \"gl=4.6,gles=\", no version means latest")
+    set(GLAD_GENERATOR "c" CACHE STRING "Language to generate the binding for")
+    
+    # Füge das CMakeLists.txt von Glad hinzu
+    add_subdirectory(${glad_SOURCE_DIR} ${glad_BINARY_DIR})
+endif()
+
+
 add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries(${PROJECT_NAME} PRIVATE mef_lib glfw)
+target_link_libraries(${PROJECT_NAME} PRIVATE mef_lib glfw glad)
 
 #OpenGL
 if (WIN32)
