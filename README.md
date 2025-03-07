@@ -2,3 +2,6 @@
 
 Im just trying to write a little graphics library in c++ via OpenGL as a little exercise :)
 
+For Windows just run the build.bat file and it hopefully should work.
+The executable should then be in the bin folder.
+

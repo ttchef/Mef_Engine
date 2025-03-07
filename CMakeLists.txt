@@ -55,9 +55,22 @@ if(NOT glad_POPULATED)
     add_subdirectory(${glad_SOURCE_DIR} ${glad_BINARY_DIR})
 endif()
 
+#GLM
+FetchContent_Declare(
+    glm
+    GIT_REPOSITORY https://github.com/g-truc/glm.git
+    GIT_TAG 0.9.9.8
+)
+FetchContent_GetProperties(glm)
+if(NOT glm_POPULATED)
+    FetchContent_Populate(glm)
+    # GLM ist header-only, wir müssen einfach nur den Include-Pfad setzen
+    add_subdirectory(${glm_SOURCE_DIR} ${glm_BINARY_DIR})
+endif()
+
 
 add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries(${PROJECT_NAME} PRIVATE mef_lib glfw glad)
+target_link_libraries(${PROJECT_NAME} PRIVATE mef_lib glfw glad glm)
 
 #OpenGL
 if (WIN32)
@@ -66,4 +79,5 @@ else()
     find_package(OpenGL REQUIRED)
     target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL)
 endif()
+
 
