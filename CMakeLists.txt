@@ -23,13 +23,17 @@ include_directories("mef_engine/")
 add_library(mef_lib STATIC mef_engine/mef.cpp)
 
 #GLFW
-find_package(glfw3 REQUIRED)
-if (glfw3_FOUND)
-    message(STATUS "GLFW found")
-else()
-    message(FATAL_ERROR "GLFW not found! Set GLFW_DIR manually!")
-endif()
-include_directories(${GLFW3_INCLUDE_DIRS})
+include(FetchContent)
+FetchContent_Declare(
+    glfw
+    GIT_REPOSITORY https://github.com/glfw/glfw.git
+    GIT_TAG 3.3.8
+)
+option(GLFW_BUILD_DOCS OFF)
+option(GLFW_BUILD_EXAMPLES OFF)
+option(GLFW_BUILD_TESTS OFF)
+option(GLFW_INSTALL OFF)
+FetchContent_MakeAvailable(glfw)
 
 add_executable(${PROJECT_NAME} main.cpp)
 target_link_libraries(${PROJECT_NAME} PRIVATE mef_lib glfw)
