@@ -19,6 +19,7 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${FullOutputDir}")
 
 
 #MEF_ENGINE
+include_directories("mef_engine/extern/")
 include_directories("mef_engine/")
 add_library(mef_lib STATIC mef_engine/mef.cpp)
 
