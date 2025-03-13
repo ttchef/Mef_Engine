@@ -21,7 +21,15 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${FullOutputDir}")
 #MEF_ENGINE
 include_directories("mef_engine/extern/")
 include_directories("mef_engine/")
-add_library(mef_lib STATIC mef_engine/mef.cpp)
+add_library(mef_lib STATIC mef_engine/mef.cpp mef_engine/circleObj/mef_circle.cpp mef_engine/Utils.cpp)
+
+target_include_directories(mef_lib PUBLIC 
+    ${CMAKE_SOURCE_DIR}/mef_engine/extern/
+    ${CMAKE_SOURCE_DIR}/mef_engine/
+    ${CMAKE_SOURCE_DIR}/mef_engine/circleObj/
+)
+# Target-Link-Libraries für mef_lib hinzufügen
+target_link_libraries(mef_lib PUBLIC glad glfw)
 
 #GLFW
 include(FetchContent)

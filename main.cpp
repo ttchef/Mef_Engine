@@ -9,9 +9,10 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-#include <mef.hpp>
-#include "stb_image.h"
 #include <iostream>
+#include <string>
+
+#include <mef.hpp>
 
 // Diese Funktion wird aufgerufen, wenn die Fenstergröße geändert wird
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
@@ -78,6 +79,8 @@ int main() {
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 430 core");
 
+    mef::Circle circle;
+
     // Render-Loop
     while (!glfwWindowShouldClose(window)) {
         // Eingabe verarbeiten
@@ -85,8 +88,10 @@ int main() {
             glfwSetWindowShouldClose(window, true);
         
         // Rendering
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
+        circle.display(0.0);
+
         // Hier würdest du deine Rendering-Befehle einfügen und
         // die GLM-Matrizen verwenden
         
