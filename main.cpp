@@ -4,6 +4,11 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
 #include <mef.hpp>
 #include "stb_image.h"
 #include <iostream>
@@ -61,7 +66,18 @@ int main() {
     
     // Hintergrundfarbe setzen (dunkelblau)
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    
+ 
+    // IMGUI
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+    ImGui::StyleColorsDark();
+
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 430 core");
+
     // Render-Loop
     while (!glfwWindowShouldClose(window)) {
         // Eingabe verarbeiten
@@ -74,13 +90,31 @@ int main() {
         // Hier würdest du deine Rendering-Befehle einfügen und
         // die GLM-Matrizen verwenden
         
+
+        // ImGUi
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        ImGui::Begin("Window");
+        ImGui::Text("Mef");
+        ImGui::End();
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
         // Buffers austauschen und Events prüfen
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
     
-    // Aufräumen
+    // cleanup
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+    
     glfwTerminate();
     return 0;
 }
+
 
