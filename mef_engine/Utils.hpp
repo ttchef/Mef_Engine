@@ -11,5 +11,6 @@ namespace mef
     };
 
     std::string loadShader(const char* filePath);
+    void printShaderLog(unsigned int shader);
 }
 

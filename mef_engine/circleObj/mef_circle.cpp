@@ -36,7 +36,6 @@ namespace mef
 
     void Circle::createObj()
     {
-        glPointSize(30.0f);
 
         glGenVertexArrays(1, &m_VAO);
         glBindVertexArray(m_VAO);
@@ -54,7 +53,9 @@ namespace mef
         glShaderSource(fShader, 1, &fragmentShader, NULL);
 
         glCompileShader(vShader);
+        mef::printShaderLog(vShader);
         glCompileShader(fShader);
+        mef::printShaderLog(fShader);
         
         m_program = glCreateProgram();
         glAttachShader(m_program, vShader);
@@ -67,7 +68,10 @@ namespace mef
     {
         glBindVertexArray(m_VAO);
         glUseProgram(m_program);
-        glDrawArrays(GL_POINTS, 0, 1);;
+        float time = static_cast<float>(glfwGetTime());
+        int loc = glGetUniformLocation(m_program, "uTime");
+        glUniform1f(loc, time);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 6);
     }
 
 }

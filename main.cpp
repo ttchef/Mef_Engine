@@ -14,7 +14,6 @@
 
 #include <mef.hpp>
 
-// Diese Funktion wird aufgerufen, wenn die Fenstergröße geändert wird
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }

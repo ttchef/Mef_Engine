@@ -17,7 +17,7 @@ namespace mef
     private:
         uint16_t m_radius;
         mef::point2f m_pos;
- 
+
         unsigned int m_VAO;
         unsigned int m_program;
 
