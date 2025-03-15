@@ -6,7 +6,7 @@ namespace mef
         Circle();
         Circle(uint16_t radius);
 
-        void display(double deltaTime);
+        void display(double deltaTime, uint16_t width, uint16_t height);
 
         void setPos(mef::point2f pos);
         void setRadius(uint16_t radius);

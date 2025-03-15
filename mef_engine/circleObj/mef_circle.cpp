@@ -64,13 +64,21 @@ namespace mef
 
     }
 
-    void Circle::display(double deltaTime)
+    void Circle::display(double deltaTime, uint16_t width, uint16_t height)
     {
         glBindVertexArray(m_VAO);
         glUseProgram(m_program);
+        // Time
         float time = static_cast<float>(glfwGetTime());
         int loc = glGetUniformLocation(m_program, "uTime");
         glUniform1f(loc, time);
+
+        // Resolution
+        int loc_width = glGetUniformLocation(m_program, "uWidth");
+        int loc_height = glGetUniformLocation(m_program, "uHeight");
+        glUniform1f(loc_width, width);
+        glUniform1f(loc_height, height);
+
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 6);
     }
 

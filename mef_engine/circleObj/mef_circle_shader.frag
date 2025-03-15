@@ -1,9 +1,11 @@
 
 #version 430 core
-
-vec2 iResolution = vec2(800, 600);
-
+#
 uniform float uTime;
+uniform float uWidth;
+uniform float uHeight;
+
+vec2 iResolution = vec2(uWidth, uHeight);
 
 out vec4 fragColor;
 
